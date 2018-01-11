@@ -125,7 +125,7 @@
     // }
   }
   .el-menu-vertical-demo.el-menu--collapse{
-    .el-icon-arrow-right,.el-submenu__title>span{
+    .el-icon-arrow-right,.el-submenu__title>span, .submenu-title-noDropdown span{
       display:none;
     }
   }
