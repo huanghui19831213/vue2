@@ -115,14 +115,6 @@
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
     min-height: 400px;
-
-    // .el-submenu .el-menu-item{
-    //   text-align:left;
-    // }
-    // .el-menu{
-    //   overflow:hidden;
-    //   width:200px;
-    // }
   }
   .el-menu-vertical-demo.el-menu--collapse{
     .el-icon-arrow-right,.el-submenu__title>span, .submenu-title-noDropdown span{

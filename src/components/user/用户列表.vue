@@ -39,47 +39,53 @@
         </div>
     </div>
     <div class="content">
-        <ul>
-            <li>
-              <div>分组：</div>
-              <span>积极用户</span><span>活跃用户</span> <span>热情用户</span><span> 新创建分组</span> <span>尝试分组</span><span> 工会G分组</span><span> 默认分组</span>
-            </li>
-            
-            <li>
-              <div>标签:</div>
-              <span>射手座</span><span>处女座</span> <span>天秤座</span><span> 白羊座</span> <span>金牛座</span><span> 摩羯座</span><span> 狮子座</span><span> 水瓶座</span><span> 双鱼座</span><span> 双子座</span><span> 巨蟹座</span>
-            </li>
-            
-            <li>
-              <div>会员属性：</div>
-              <span>注册会员</span><span>非注册会员</span> 
-            </li>
-            <li>
-              <div>回复状态：</div>
-              <span>已回复</span><span>未回复</span> <span>已过期</span><span> 未回复已过期</span> <span>暂无</span>
-            </li>
-            <li>
-              <div>性别：</div>
-              <span>男</span><span> 女 </span> <span>未知</span>
-            </li>
-            <li>
-              <div>信息包含：</div>
-              <span>手机  </span><span> 姓名 </span> <span>身份证</span>
-            </li>
-            <li>
-              <div>用户昵称：</div>
-              <el-input placeholder="用户昵称"></el-input>
-            </li>
-            <li>
-              <div>关注时间：</div>
-              <el-date-picker
-                type="daterange"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                default-value="2010-10-01">
-              </el-date-picker>
-            </li>
-        </ul>
+        <transition>
+          <ul :class="isOpen ? 'active ' : ''">
+              <li>
+                <div>分组：</div>
+                <span>积极用户</span><span>活跃用户</span> <span>热情用户</span><span> 新创建分组</span> <span>尝试分组</span><span> 工会G分组</span><span> 默认分组</span>
+              </li>
+              
+              <li>
+                <div>标签:</div>
+                <span>射手座</span><span>处女座</span> <span>天秤座</span><span> 白羊座</span> <span>金牛座</span><span> 摩羯座</span><span> 狮子座</span><span> 水瓶座</span><span> 双鱼座</span><span> 双子座</span><span> 巨蟹座</span>
+              </li>
+              
+              <li>
+                <div>会员属性：</div>
+                <span>注册会员</span><span>非注册会员</span> 
+              </li>
+              <li>
+                <div>回复状态：</div>
+                <span>已回复</span><span>未回复</span> <span>已过期</span><span> 未回复已过期</span> <span>暂无</span>
+              </li>
+              <li>
+                <div>性别：</div>
+                <span>男</span><span> 女 </span> <span>未知</span>
+              </li>
+              <li>
+                <div>信息包含：</div>
+                <span>手机  </span><span> 姓名 </span> <span>身份证</span>
+              </li>
+              <li>
+                <div>用户昵称：</div>
+                <el-input placeholder="用户昵称"></el-input>
+              </li>
+              <li>
+                <div>关注时间：</div>
+                <el-date-picker
+                  type="daterange"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  default-value="2010-10-01">
+                </el-date-picker>
+              </li>
+          </ul>
+        </transition>
+        <div  class="actBtn">
+          <el-button @click="open" v-if="!isOpen" >展开</el-button>
+          <el-button @click="open" v-if="isOpen" >收缩</el-button>
+        </div>
     </div>
     <div class="btns">
       <div>
@@ -131,6 +137,7 @@
         dialogVisible: false,
         checkedAll:false,
         checkModel:[],
+        isOpen:false,
         tableData: [{
           id:1,
           name:'吴承蔚~招聘中',
@@ -194,6 +201,9 @@
           })
         }
       },
+      open(){
+        this.isOpen=!this.isOpen;
+      },
       modfied(e){
           this.title=e;
           this.dialogVisible = true;
@@ -210,7 +220,10 @@
  
 </script>
 <style lang="scss" scoped>
-
+   .actBtn{
+     width:75px;
+     margin:0 auto;
+   }
    .btns{
      background:#fff;
      padding:12px 20px;
@@ -230,6 +243,14 @@
    }
    div.el-input,div.el-date-editor{
      width:300px;
+   }
+   ul{
+     transition:max-height 0.8s;
+     max-height:132px;
+     overflow: hidden;
+    &.active{
+      max-height:400px;
+    }
    }
    li{
      font-size:14px;
