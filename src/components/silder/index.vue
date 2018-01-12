@@ -22,7 +22,7 @@
                   </template>
                   <template v-for="child in item.children">
                         <!-- 三级菜单 -->
-                         <sidebar-item  v-if="child.children" :routes="[child]" :key="child.path"></sidebar-item>
+                         <sidebar-item  class="nest-menu" v-if="child.children" :routes="[child]" :key="child.path"></sidebar-item>
 
                          <router-link v-if="!child.hiden&&!child.children" :to="item.path+'/'+child.path" :key="child.name"   >
                             <el-menu-item :index="item.path+'/'+child.path">{{child.name}}</el-menu-item>

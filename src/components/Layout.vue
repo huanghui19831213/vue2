@@ -1,12 +1,12 @@
 <template>
     <div class="container-layout">
-      <div class="left"> 
-        <div class="container-layout">
+      <div :class="!isCollapse?'left':'left coll'" ref="scrollContainer" @wheel.prevent="handleScroll"> 
+          <div class="menu" ref="scrollWrapper" :style="{top: top + 'px'}">
           <el-menu  :collapse="isCollapse" background-color="#304156" text-color="#fff" active-text-color="#409EFF"
             :unique-opened="true"  class="el-menu-vertical-demo"  mode="vertical"  :default-active="$route.path" >
             <silder-item :routes="router"></silder-item>
           </el-menu>
-       </div>
+          </div>
       </div>
       <div class="right"> 
           <div class="top">
@@ -35,6 +35,7 @@
 <script>
   import SilderItem from './silder/index.vue'
   
+  const delta = 15
   export default {
     components: { SilderItem },
     data() {
@@ -43,6 +44,8 @@
           isCollapse: false,
           levelList:null,
           tab:[],
+          tab2:[],
+          top:0,
           oIndex:null
       };
     },
@@ -61,8 +64,25 @@
       }
     },
      methods: {
-      handleOpen(key, keyPath) {
-        console.log(keyPath);
+      handleScroll(e) {
+        const eventDelta = e.wheelDelta || -e.deltaY * 3
+        const $container = this.$refs.scrollContainer
+        const $containerHeight = $container.offsetHeight
+        const $wrapper = this.$refs.scrollWrapper
+        const $wrapperHeight = $wrapper.offsetHeight
+        if (eventDelta > 0) {
+          this.top = Math.min(0, this.top + eventDelta)
+        } else {
+          if ($containerHeight< $wrapperHeight) {
+            if (this.top < -($wrapperHeight - $containerHeight + delta)) {
+              this.top = this.top
+            } else {
+              this.top = Math.max(this.top + eventDelta, $containerHeight - $wrapperHeight - delta)
+            }
+          } else {
+            this.top = 0
+          }
+        }
       },
       menuChange(){
         this.isCollapse=!this.isCollapse;
@@ -72,6 +92,16 @@
         let matched = this.$route.matched.filter(item => item.name)
         const first = matched[0]
         this.levelList = matched
+
+        this.tab.push(this.$route)
+        if(this.tab2.length==0){
+          this.tab2.push(this.tab[0])
+        }else{
+          this.tab.map((e,i)=>{
+                    console.log(this.tab2)
+          })
+        }
+
       },
       activeTab(i){
         this.oIndex=i;
@@ -81,12 +111,21 @@
 </script>
 
 <style lang="scss" >
+  .el-menu{border-right:0px;height:100%;}
   .container-layout{
     display: flex;
     height:100%;
     .left  {
-      //width:200px;
-      min-height:100%;
+      width:200px;
+      transition: width .28s;
+      height:100%;
+      position: relative;
+      .menu{
+        position: absolute;
+        width: 100%!important;
+        height:100%;
+      }
+      &.coll{width:64px;}
     }
     .right{
       flex:1;
@@ -119,6 +158,9 @@
   .el-menu-vertical-demo.el-menu--collapse{
     .el-icon-arrow-right,.el-submenu__title>span, .submenu-title-noDropdown span{
       display:none;
+    }
+    .nest-menu .el-submenu__title span{
+      display:block;
     }
   }
   .tab {
