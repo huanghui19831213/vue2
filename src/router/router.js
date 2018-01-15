@@ -62,12 +62,12 @@ import Login from '@/components/other/Login'
 import Keep from '@/components/other/keep'
 
 const router=[{
-  path: '/a',
+  path: '',
   component: Layout,
   isRoot:true,
   hiden:true,
   children:[
-    {path: '/index',hiden:'true',component: Home,meta: { requiresAuth: true }}
+    {path: '',hiden:'true',component: Home,meta: { requiresAuth: true }}
   ]
 },{
       path: '/according',

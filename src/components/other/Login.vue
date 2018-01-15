@@ -24,7 +24,7 @@
     methods: {
       submitForm() {
         localStorage.a="2222"
-        this.$router.push({"path":"/index"})
+        this.$router.push({"path":"/"})
       }
     }
   }

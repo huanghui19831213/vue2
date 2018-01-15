@@ -24,6 +24,8 @@
           <!-- <div class="tab" v-if='levelList'>
                <span  class="activeTab">{{$route.name}}<i class="el-icon-close"></i></span>
           </div> -->
+
+			    <tags-view v-if='levelList.length>0'></tags-view>
           <div class="wrapper">
             <router-view></router-view>
           </div>
@@ -34,10 +36,11 @@
 
 <script>
   import SilderItem from './silder/index.vue'
+  import TagsView from './other/targetView.vue'
   
   const delta = 15
   export default {
-    components: { SilderItem },
+    components: { SilderItem ,TagsView},
     data() {
       return {
           router:[],
@@ -73,6 +76,7 @@
         if (eventDelta > 0) {
           this.top = Math.min(0, this.top + eventDelta)
         } else {
+          console.log($container,$wrapper)
           if ($containerHeight< $wrapperHeight) {
             if (this.top < -($wrapperHeight - $containerHeight + delta)) {
               this.top = this.top
@@ -92,16 +96,6 @@
         let matched = this.$route.matched.filter(item => item.name)
         const first = matched[0]
         this.levelList = matched
-
-        this.tab.push(this.$route)
-        if(this.tab2.length==0){
-          this.tab2.push(this.tab[0])
-        }else{
-          this.tab.map((e,i)=>{
-                    console.log(this.tab2)
-          })
-        }
-
       },
       activeTab(i){
         this.oIndex=i;
@@ -117,13 +111,14 @@
     height:100%;
     .left  {
       width:200px;
-      transition: width .28s;
+      transition: all .2s ease-in;
       height:100%;
       position: relative;
+      z-index:1000;
+      background-color: rgb(48, 65, 86);
       .menu{
         position: absolute;
         width: 100%!important;
-        height:100%;
       }
       &.coll{width:64px;}
     }

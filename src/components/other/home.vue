@@ -32,11 +32,22 @@
           </li>
         </ul>
       </div>
+      <div>{{count}}</div>
+      <div>{{getOdd}}</div>
+      <el-button @click="add">+</el-button>
+      <el-button  @click="decrease">-</el-button>
+      <el-button  @click="oddAdd">oddAdd</el-button>
     </div>
 </template>
 
 <script>
-
+import {mapGetters,mapActions} from 'vuex'
+ export default {
+        computed:mapGetters(['count','getOdd']),
+        // 发生点击事件触发不同函数
+        methods:mapActions(['add','decrease','oddAdd'])
+   
+  }
 </script>
 <style lang="scss" scoped>
  .content{

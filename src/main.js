@@ -168,9 +168,18 @@ import './font/iconfont.css'
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts 
 
+import Vuex from 'vuex'
+Vue.use(Vuex)
 
+import store from './store/index'
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if(to.path=="/login"&&localStorage.a ){
+    next({
+      path: '/',
+      query: { redirect: to.fullPath }
+    })
+  }
+  else if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
     if (!localStorage.a) {
@@ -189,6 +198,7 @@ router.beforeEach((to, from, next) => {
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })
